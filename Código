@@ -1,0 +1,86 @@
+### Ejemplo n°1 ###
+
+#Creamos los parámetros y los vectores que van a contener los valores de nuestras variables#
+
+lambda = 0.01
+s = 0.25
+B = 7
+beta = 0.5
+L = rep(0,100)
+L[1]= 1
+k = rep(0,100)
+k[1] = 0.072068
+y = rep(0,100)
+y[1] = B*k[1]^beta
+r = rep(0,100)
+K = rep(0,100)
+Y = rep(0,100)
+
+#Establecemos la dinámica a partir de las condiciones iniciales#
+
+for (t in 2:100) { L[t]=L[1]*(1+lambda)^(t-1) }
+
+for (t in 2:100) { k[t]=(s*B*k[t-1]^beta)/(1+lambda) }
+
+for (t in 2:100) { y[t]=B*k[t]^beta } 
+
+for (t in 1:100) { r[t]=beta*B*k[t]^(beta-1) }
+
+for (t in 1:100) { K[t]=k[t]*L[t] }
+
+for (t in 1:100) { Y[t]=y[t]*L[t] }
+
+#Creamos un cuadro con las variables (dataframe)#
+
+CUADRO = data.frame(L, k, K, y, Y, r)
+
+#Graficamos#
+
+plot(k, type = "l", main = "Evoloción de k en el tiempo", xlab = "tiempo", xlim = c(0,30), col = "blue")
+
+plot(Y, type = "l", main = "Evolución del Y en el tiempo,", xlab = "tiempo", col = "blue")
+
+##Fin del ejemplo##
+
+### Ejemplo n°2 ### 
+
+#Creamos los parámetros y los vectores que van a contener los valores de nuestras variables#
+
+lambda = 0.01
+s = 0.25
+B = 7.185853
+m = 1
+beta = 0.5
+gamma = 0.35 
+L = rep(0,100)
+L[1] = 1
+k = rep(0,100)
+k[1] = 0.072068
+y = rep(0,100)
+y[1] = (B*k[1]^beta)*((m-k[1])^gamma)
+K = rep(0,100)
+Y = rep(0,100)
+
+#Establecemos la dinámica a partir de las condiciones iniciales#
+
+for (t in 2:100) { L[t] = L[1]*(1+lambda)^(t-1) }
+
+for (t in 2:100) { k[t]=((s*B*k[t-1]^beta)*((m-k[t-1])^gamma))/(1+lambda) }
+
+for (t in 2:100) { y[t]=(B*k[t]^beta)*((m-k[t])^gamma) } 
+
+for (t in 1:100) { K[t]=k[t]*L[t] }
+
+for (t in 1:100) { Y[t]=y[t]*L[t] }
+
+#Creamos un cuadro con las variables (dataframe)#
+
+CUADRO = data.frame(L, k, K, y, Y)
+
+#Graficamos#
+
+plot(k, type = "l", main = "Evoloción de k en el tiempo", xlab = "tiempo", col = "blue")
+
+plot(Y, type = "l", main = "Evolución del Y en el tiempo,", xlab = "tiempo", col = "blue")
+
+###FIN###
